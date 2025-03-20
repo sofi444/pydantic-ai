@@ -1,5 +1,8 @@
 from __future__ import annotations as _annotations
 
+import random
+from string import ascii_letters, digits
+
 import asyncio
 import time
 from collections.abc import AsyncIterable, AsyncIterator, Iterator
@@ -21,6 +24,9 @@ if TYPE_CHECKING:
 _P = ParamSpec('_P')
 _R = TypeVar('_R')
 
+
+def dummy_tool_call_id(*, length: int = 15) -> str:
+    return 'fake_call_' + ''.join(random.choices(ascii_letters + digits, k=length))
 
 async def run_in_executor(func: Callable[_P, _R], *args: _P.args, **kwargs: _P.kwargs) -> _R:
     if kwargs:

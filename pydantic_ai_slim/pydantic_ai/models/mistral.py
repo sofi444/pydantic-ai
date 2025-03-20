@@ -381,6 +381,9 @@ class MistralModel(Model):
     def _map_mistral_to_pydantic_tool_call(tool_call: MistralToolCall) -> ToolCallPart:
         """Maps a MistralToolCall to a ToolCall."""
         tool_call_id = tool_call.id or None
+        if tool_call_id is None:
+            tool_call_id = _utils.dummy_tool_call_id()
+        
         func_call = tool_call.function
 
         return ToolCallPart(func_call.name, func_call.arguments, tool_call_id)
